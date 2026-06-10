@@ -1,0 +1,185 @@
+/* ============================================================
+   ALANKRITA — animations.css
+   ============================================================ */
+
+/* Marquee for hero strip */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Fade up for scroll reveals */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade in */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Shimmer for image placeholders */
+@keyframes shimmer {
+  0%   { background-position: 200% 50%; }
+  50%  { background-position: 0%   50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Subtle pulse for gold elements */
+@keyframes goldPulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+
+/* Slide in from right */
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* Scale in */
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+/* Spin */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Float — subtle hover bob for hero text */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* Gold line draw */
+@keyframes drawLine {
+  from { width: 0; }
+  to   { width: 60px; }
+}
+
+/* ── STAGGER CHILDREN ──────────────────────────────────────── */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.45s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.55s; }
+
+/* Page transition */
+.page-enter { animation: fadeIn 0.6s ease forwards; }
+
+/* ── HERO TEXT FLOAT ───────────────────────────────────────── */
+.hero-headline { animation: float 6s ease-in-out infinite; }
+
+/* ── GOLD DIVIDER LINE ─────────────────────────────────────── */
+.gold-divider {
+  display: block;
+  height: 1px;
+  background: var(--accent-gold);
+  margin: 0 auto 28px;
+  animation: drawLine 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-play-state: paused;
+}
+.reveal.visible .gold-divider { animation-play-state: running; }
+
+/* ── CUSTOM CURSOR ─────────────────────────────────────────── */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  border: 1px solid var(--accent-gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transition: transform 0s, width 0.3s ease, height 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+  opacity: 0.7;
+}
+.cursor-ring.hovered {
+  width: 56px; height: 56px;
+  border-color: var(--accent-gold);
+  opacity: 1;
+  background: rgba(201,169,110,0.08);
+}
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 6px; height: 6px;
+  background: var(--accent-gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100000;
+}
+
+/* ── SCROLL REVEAL VARIANTS ────────────────────────────────── */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.94);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+/* ── PRODUCT CARD HOVER LIFT ───────────────────────────────── */
+.product-card {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s ease;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+}
+
+/* ── BUTTON SHINE SWEEP ────────────────────────────────────── */
+.btn { position: relative; overflow: hidden; }
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: left 0.5s ease;
+}
+.btn:hover::before { left: 140%; }
+
+/* ── SECTION GOLD LINE ACCENT ──────────────────────────────── */
+.gold-label::before {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 1px;
+  background: var(--accent-gold);
+  vertical-align: middle;
+  margin-right: 10px;
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+}
+.visible ~ * .gold-label::before,
+.gold-label.visible::before,
+.reveal.visible .gold-label::before { width: 24px; }
